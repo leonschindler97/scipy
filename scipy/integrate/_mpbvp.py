@@ -407,9 +407,11 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
 
     if any(y.ndim != 2 for y in Y):
         raise ValueError("`Y` must be a list of 2 dimensional arrays.")
+    if len(X) != len(Y):
+        raise ValueError("`X` and `Y` must use the same number of regions.")
     if any(y.shape[1] != x.shape[0] for x, y in zip(X, Y)):
         raise ValueError(f"Regions must be of the same length in `X` and `Y`.")
-
+   
     if tol < 100 * EPS:
         warn(f"`tol` is too low, setting to {100 * EPS:.2e}", stacklevel=2)
         tol = 100 * EPS
