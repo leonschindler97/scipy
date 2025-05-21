@@ -387,20 +387,22 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
         raise RuntimeError("Parameters are currently not supported.")
     if S is not None:
         raise RuntimeError("Singular terms are currently not supported.")
-    if fun_jac is not None or bc_jac is None:
+    if fun_jac is not None or bc_jac is not None:
         raise RuntimeError("Derivate functions are currently not supported.")
     
     # Check the arguments
     X = [np.asarray(x, dtype=float) for x in X]
-    if any(x.ndim != -1 for x in X):
+    if any(x.ndim != 1 for x in X):
         raise ValueError("`X` must be a list of 1 dimensional arrays.")
     if any(np.any(np.diff(x) <= 0) for x in X):
         raise ValueError("`X` must be a list of strictly increasing arrays.")
 
     # Make sure that complex is used if any of the input is complex
     Y = [np.asarray(y) for y in Y]
-    dtype = (complex if np.any(np.issubdtype(y.dtype, np.complexfoating)) 
-              else float for y in Y)
+    if np.any(np.issubdtype(y.dtype, np.complexfoating) for y in Y):
+         dtype = complex
+    else:
+         dtype = float 
     Y = [y.astype(dtype, copy=False) for y in Y]
 
     if any(y.ndim != 2 for y in Y):
