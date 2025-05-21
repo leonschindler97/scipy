@@ -399,7 +399,7 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
 
     # Make sure that complex is used if any of the input is complex
     Y = [np.asarray(y) for y in Y]
-    if np.any(np.issubdtype(y.dtype, np.complexfoating) for y in Y):
+    if np.any(np.issubdtype(y.dtype, np.complexfloating) for y in Y):
          dtype = complex
     else:
          dtype = float 
