@@ -5,7 +5,6 @@ import numpy as np
 
 from scipy.sparse import coo_matrix, csc_matrix
 from scipy.sparse.linalg import splu
-from scipy.optimize import OptimizeResult
 from scipy.integrate._bvp import (
     EPS,
     TERMINATION_MESSAGES,
