@@ -140,6 +140,7 @@ py3.install_sources([
     '__init__.py',
     '_bvp.py',
     '_lebedev.py',
+    '_mpbvp.py',
     '_ode.py',
     '_quad_vec.py',
     '_quadrature.py',
