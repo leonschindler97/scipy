@@ -516,15 +516,6 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
         # Convert residuals to array
         rms_res = np.hstack(rms_res)
 
-        # Add nodes
-        for i, (insert_1, insert_2) in enumerate(zip(Insert_1, Insert_2)):
-            if insert_1.shape[0] == 0 and insert_2.shape[0] == 0:
-                continue
-            x_i = modify_mesh(X[i], insert_1, insert_2)
-            y_i = s_i(x_i)
-            X[i] = x_i
-            Y[i] = y_i
-
         if singular:
             status = 2
             break
@@ -536,6 +527,15 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
                 print_iteration_progress(iteration, max_rms_res, max_bc_res,
                                         M, nodes_added)
             break
+
+        # Add nodes
+        for i, (insert_1, insert_2) in enumerate(zip(Insert_1, Insert_2)):
+            if insert_1.shape[0] == 0 and insert_2.shape[0] == 0:
+                continue
+            x_i = modify_mesh(X[i], insert_1, insert_2)
+            y_i = s_i(x_i)
+            X[i] = x_i
+            Y[i] = y_i
 
         if verbose == 2:
             print_iteration_progress(iteration, max_rms_res, max_bc_res, M,
