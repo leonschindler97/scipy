@@ -520,7 +520,7 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
             status = 2
             break
 
-        if m + nodes_added > max_nodes:
+        if M + nodes_added > max_nodes:
             status = 1
             if verbose == 2:
                 nodes_added = f"({nodes_added})"
