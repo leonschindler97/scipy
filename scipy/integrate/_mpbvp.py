@@ -470,7 +470,7 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
         bc_res = bc(Ya, Yb)
         max_bc_res = np.max(abs(bc_res))
 
-        # This relation is not trivial, but can be verified.z
+        # This relation is not trivial, but can be verified.
         r_middle = 1.5 * r_col / h
 
 
