@@ -533,7 +533,6 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
             break
         elif max_bc_res <= bc_tol:
             status = 0
-            print(f"break but nodes added {nodes_added}")
             break
         elif iteration >= max_iteration:
             status = 3
