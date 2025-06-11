@@ -520,12 +520,23 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
             status = 2
             break
 
+        if verbose == 2:
+            print_iteration_progress(iteration, max_rms_res, max_bc_res, M,
+                                     nodes_added)
+
         if M + nodes_added > max_nodes:
             status = 1
             if verbose == 2:
                 nodes_added = f"({nodes_added})"
                 print_iteration_progress(iteration, max_rms_res, max_bc_res,
                                         M, nodes_added)
+            break
+        elif max_bc_res <= bc_tol:
+            status = 0
+            print(f"break but nodes added {nodes_added}")
+            break
+        elif iteration >= max_iteration:
+            status = 3
             break
 
         # Add nodes
@@ -536,17 +547,6 @@ def solve_mpbvp(fun, bc, X, Y, p=None, S=None, fun_jac=None, bc_jac=None,
             y_i = s_i(x_i)
             X[i] = x_i
             Y[i] = y_i
-
-        if verbose == 2:
-            print_iteration_progress(iteration, max_rms_res, max_bc_res, M,
-                                     nodes_added)
-
-        if max_bc_res <= bc_tol:
-            status = 0
-            break
-        elif iteration >= max_iteration:
-            status = 3
-            break
 
     if verbose > 0:
         if status == 0:
